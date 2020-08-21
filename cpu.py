@@ -1,7 +1,6 @@
 """CPU functionality."""
 
 import sys
-from inspect import signature
 
 
 class CPU:
@@ -223,10 +222,10 @@ class CPU:
 
             # run op
             op_func = self.branchtable[IR]
-            func_params = signature(op_func).parameters
-            if len(func_params) == 1:
+            num_params = IR >> 6
+            if num_params == 1:
                 op_func(operand_a)
-            elif len(func_params) == 2:
+            elif num_params == 2:
                 op_func(operand_a, operand_b)
             else:
                 op_func()
