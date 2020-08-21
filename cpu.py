@@ -66,7 +66,7 @@ class CPU:
             print(f"File {filename} not found.")
             sys.exit(2)
 
-    def alu(self, op, reg_a, reg_b):
+    def alu(self, op, reg_a, reg_b=1):
         """ALU operations."""
 
         if op == "ADD":
@@ -93,13 +93,13 @@ class CPU:
             self.reg[reg_a] ^= self.reg[reg_b]
             self.pc += 3
         elif op == "NOT":
-            self.reg[reg_a] -= self.reg[reg_a]
+            self.reg[reg_a] = 0b11111111 - self.reg[reg_a]
             self.pc += 2
         elif op == "SHL":
-            self.reg[reg_a] << self.reg[reg_b]
+            self.reg[reg_a] <<= self.reg[reg_b]
             self.pc += 3
         elif op == "SHR":
-            self.reg[reg_a] >> self.reg[reg_b]
+            self.reg[reg_a] >>= self.reg[reg_b]
             self.pc += 3
         elif op == "MOD":
             self.reg[reg_a] %= self.reg[reg_b]
@@ -163,8 +163,8 @@ class CPU:
     def XOR(self, reg_a, reg_b):
         self.alu("XOR", reg_a, reg_b)
 
-    def NOT(self, reg_a, reg_b):
-        self.alu("NOT", reg_a, reg_b)
+    def NOT(self, reg_a):
+        self.alu("NOT", reg_a)
 
     def SHL(self, reg_a, reg_b):
         self.alu("SHL", reg_a, reg_b)
