@@ -19,6 +19,13 @@ class CPU:
             0b10100000: self.ADD,
             0b10100010: self.MUL,
             0b10100111: self.CMP,
+            0b10101000: self.AND,
+            0b10101010: self.OR,
+            0b10101011: self.XOR,
+            0b01101001: self.NOT,
+            0b10101100: self.SHL,
+            0b10101101: self.SHR,
+            0b10100100: self.MOD,
             0b01000101: self.PUSH,
             0b01000110: self.POP,
             0b01010000: self.CALL,
@@ -77,6 +84,27 @@ class CPU:
             elif self.reg[reg_a] < self.reg[reg_b]:
                 self.fl = 0b00000100
             self.pc += 3
+        elif op == "AND":
+            self.reg[reg_a] &= self.reg[reg_b]
+            self.pc += 3
+        elif op == "OR":
+            self.reg[reg_a] |= self.reg[reg_b]
+            self.pc += 3
+        elif op == "XOR":
+            self.reg[reg_a] ^= self.reg[reg_b]
+            self.pc += 3
+        elif op == "NOT":
+            self.reg[reg_a] -= self.reg[reg_a]
+            self.pc += 2
+        elif op == "SHL":
+            self.reg[reg_a] << self.reg[reg_b]
+            self.pc += 3
+        elif op == "SHR":
+            self.reg[reg_a] >> self.reg[reg_b]
+            self.pc += 3
+        elif op == "MOD":
+            self.reg[reg_a] %= self.reg[reg_b]
+            self.pc += 3
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -126,6 +154,27 @@ class CPU:
 
     def CMP(self, reg_a, reg_b):
         self.alu("CMP", reg_a, reg_b)
+
+    def AND(self, reg_a, reg_b):
+        self.alu("AND", reg_a, reg_b)
+
+    def OR(self, reg_a, reg_b):
+        self.alu("OR", reg_a, reg_b)
+
+    def XOR(self, reg_a, reg_b):
+        self.alu("XOR", reg_a, reg_b)
+
+    def NOT(self, reg_a, reg_b):
+        self.alu("NOT", reg_a, reg_b)
+
+    def SHL(self, reg_a, reg_b):
+        self.alu("SHL", reg_a, reg_b)
+
+    def SHR(self, reg_a, reg_b):
+        self.alu("SHR", reg_a, reg_b)
+
+    def MOD(self, reg_a, reg_b):
+        self.alu("MOD", reg_a, reg_b)
 
     def PUSH(self, reg_addr):
         self.sp -= 1
