@@ -16,6 +16,7 @@ class CPU:
             0b10000010: self.LDI,
             0b01000111: self.PRN,
             0b10100000: self.ADD,
+            0b10111111: self.ADDI,
             0b10100010: self.MUL,
             0b10100111: self.CMP,
             0b10101000: self.AND,
@@ -71,6 +72,9 @@ class CPU:
 
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
+            self.pc += 3
+        elif op == "ADDI":
+            self.reg[reg_a] += reg_b
             self.pc += 3
         elif op == "MUL":
             self.reg[reg_a] *= self.reg[reg_b]
@@ -147,6 +151,9 @@ class CPU:
 
     def ADD(self, reg_a, reg_b):
         self.alu("ADD", reg_a, reg_b)
+
+    def ADDI(self, reg_a, val):
+        self.alu("ADDI", reg_a, val)
 
     def MUL(self, reg_a, reg_b):
         self.alu("MUL", reg_a, reg_b)
